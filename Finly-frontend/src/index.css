@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+/* ============================================================
+   FINLY — design tokens
+   "Ink wash" palette: warm cream canvas, charcoal ink text,
+   slate-blue accent, with amber reserved only for caution states
+   and sage/wax for positive/negative money signals.
+   ============================================================ */
+
+@theme {
+  --font-display: "Montserrat", "Segoe UI", sans-serif;
+  --font-body: "Roboto", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+  /* Backgrounds — clean light canvas with subtle lavender tint */
+--color-canvas-50:  #ffffff;
+--color-canvas-100: #faf9ff;
+--color-canvas-200: #f3f1fb;
+
+/* Borders / dividers / muted fills */
+--color-line-200: #e7e4ef;
+--color-line-300: #d1cddc;
+--color-line-400: #b5b0c2;
+
+/* Text — deep neutral charcoal with slight purple undertone */
+--color-ink-500: #85818e;
+--color-ink-600: #6b6773;
+--color-ink-700: #4b4753;
+--color-ink-800: #332f3b;
+--color-ink-900: #211d27;
+
+/* Brand accent — violet / purple */
+--color-accent-100: #f0eaff;
+--color-accent-300: #b9a5ed;
+--color-accent-400: #9475df;
+--color-accent-500: #7654c7;
+--color-accent-600: #6042a8;
+--color-accent-700: #4b3289;
+
+/* Caution accent — warm amber */
+--color-warn-400: #e2b65a;
+--color-warn-500: #c79632;
+--color-warn-600: #98701f;
+
+/* Positive / negative money signals */
+--color-sage-400: #70ad82;
+--color-sage-500: #438b59;
+--color-sage-600: #306f44;
+
+--color-wax-400: #d56858;
+--color-wax-500: #b84a3a;
+--color-wax-600: #96362c;
+
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-canvas-200);
+  color: var(--color-ink-700);
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+.font-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hairline rule, the recurring structural device throughout the app */
+.rule {
+  border-color: var(--color-line-300);
+}
+.rule-strong {
+  border-color: var(--color-line-400);
+}
+
+/* Underline-style form inputs — filling out a paper slip, not a boxed field */
+.slip-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--color-line-400);
+  color: var(--color-ink-800);
+  padding: 0.5rem 0.125rem;
+  transition: border-color 150ms ease;
+  font-family: var(--font-body);
+}
+.slip-input::placeholder {
+  color: var(--color-ink-500);
+}
+.slip-input:focus {
+  outline: none;
+  border-bottom-color: var(--color-accent-500);
+}
+
+.slip-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  background-image: linear-gradient(45deg, transparent 50%, var(--color-ink-600) 50%),
+    linear-gradient(135deg, var(--color-ink-600) 50%, transparent 50%);
+  background-position: calc(100% - 14px) center, calc(100% - 9px) center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 1.75rem;
+  border-radius: 0;
+}
+.slip-select option {
+  background-color: var(--color-canvas-50);
+  color: var(--color-ink-800);
+}
+
+/* Scrollbar tuned to the palette */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-canvas-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-400);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-400);
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Visible keyboard focus, on top of Tailwind's own focus-visible utilities */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: 2px;
+}
+
+/* ---- Signature element: the stamped seal ---- */
+.seal {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+  font-family: var(--font-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 9999px;
+  transform: rotate(-4deg);
+  -webkit-mask-image: radial-gradient(circle, black 97%, transparent 100%);
+}
+.seal::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+  opacity: 0.55;
+}
+.seal-ok {
+  color: var(--color-sage-600);
+  border-color: var(--color-sage-500);
+  background: color-mix(in srgb, var(--color-sage-500) 12%, transparent);
+}
+.seal-over {
+  color: var(--color-wax-600);
+  border-color: var(--color-wax-500);
+  background: color-mix(in srgb, var(--color-wax-500) 12%, transparent);
+}
+.seal-warn {
+  color: var(--color-warn-600);
+  border-color: var(--color-warn-500);
+  background: color-mix(in srgb, var(--color-warn-500) 14%, transparent);
+}
+
+/* Perforated top edge on parchment insets, like a torn passbook leaf */
+.perforated::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background-image: radial-gradient(circle, var(--color-canvas-200) 2.5px, transparent 2.6px);
+  background-size: 14px 8px;
+  background-position: 4px 0;
+}
